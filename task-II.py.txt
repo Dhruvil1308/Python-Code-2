@@ -1,0 +1,31 @@
+import pandas as pd
+
+# Load the Excel file
+file_path = r'C:\Users\praja\Desktop\task.xlsx'
+df = pd.read_excel(file_path)
+
+# Display the DataFrame before cleaning
+print("Before Cleaning:")
+print(df)
+
+# Define a function to correct misspelled locations
+def correct_location(location):
+    corrections = {
+        'hyderabad': 'Hyderabad',
+        'lucknow': 'Lucknow',
+        'nodia': 'Noida',
+        'banaras': 'Banaras',  # Banaras is an older name for Varanasi
+        'patna': 'Patna'
+    }
+    return corrections.get(location.lower(), location)  # Use .lower() to match keys in lowercase
+
+# Apply the corrections to the 'Location' column
+df['Location'] = df['Location'].apply(correct_location)
+
+# Display the DataFrame after cleaning
+print("After Cleaning:")
+print(df)
+
+# Save the cleaned data back to an Excel file
+cleaned_file_path = r'C:\Users\praja\Desktop\cleaned_task.xlsx'
+df.to_excel(cleaned_file_path, index=False)
